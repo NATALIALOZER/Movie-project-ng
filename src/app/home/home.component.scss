@@ -1,3 +1,15 @@
 a {
   cursor: pointer;
 }
+.header-spacer {
+  flex: 1 1 auto;
+}
+.card-body{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.poster-card{
+  max-width : 324px ;
+  margin: 10px;
+}

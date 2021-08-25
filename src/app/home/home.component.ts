@@ -39,24 +39,20 @@ export class HomeComponent implements OnInit {
   private urlApi = 'https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&language=en-US'
   movies: MovieResults[] = [];
   data: any;
+  length: number = 1070
 
   constructor(
     private http: HttpClient,
   ) {
   }
 
-  /*changeUrl(): string{
-    /!*console.log(this.pageEvent.pageIndex)*!/
-    return this.urlApi + "&page=" + this.pageEvent.pageIndex
-  }*/
-
-  getFirst(): Observable<Array<MovieResults>> {
+  getData(): Observable<Array<MovieResults>> {
     return this.data = this.http.get<Movie>(this.urlApi + `&page=1`).pipe(
       map(x => x.results)
     )
   }
 
-  getData(event: PageEvent): Observable<Array<MovieResults>> {
+  getDataEvent(event: PageEvent): Observable<Array<MovieResults>> {
     if(event){
       this.data = this.http.get<Movie>(this.urlApi + `&page=${event.pageIndex+1}`).pipe(
       map(x => x.results)
@@ -67,28 +63,20 @@ export class HomeComponent implements OnInit {
     return this.data
   }
 
- /* getResponse(): Observable<any> {
+  getResponse(): Observable<any> {
     return this.http.get<any>(this.urlApi).pipe(tap(response => {
         response.total_results
       }
     ))
-  }*/
+  }
 
   ngOnInit(): void {
-    this.getFirst().subscribe((response: Array<MovieResults>) => {
-      this.movies = response;});
-    /*console.log(this.pageEvent.pageIndex)
     this.getData().subscribe((response: Array<MovieResults>) => {
-      this.movies = response;*/
-      /*console.log(this.movies)*/
-      /*this.getResponse().subscribe((res: any) => {
-        /!*console.log(this.page)*!/
-        this.totalResults = res.total_results
-      })*/
-    /*},*/ /*(error) => {
-      console.log('error', error);
-    }, () => {
-      console.log('complete');
-    }*//*);*/
+      this.movies = response;});
+      this.getResponse().subscribe((res: any) => {
+        this.length = res.total_results
+      })
   }
+
+
 }
