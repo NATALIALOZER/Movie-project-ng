@@ -3,18 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import {PagerService} from "../share/pager.service";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        MatPaginatorModule
+    ],
   providers: [
-    PagerService
+
   ]
 })
 export class HomeModule { }
