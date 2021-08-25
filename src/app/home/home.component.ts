@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {NewServiceService} from "../new-service.service";
-import {PageEvent} from "@angular/material/paginator";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {map, tap} from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
+import { PageEvent } from '@angular/material/paginator';
 
 
 export interface Movie {
@@ -12,20 +14,20 @@ export interface Movie {
 }
 
 export interface MovieResults {
-  adult?:boolean;
-  backdrop_path?:string;
-  genre_ids?:any[];
-  id:number;
-  original_language?:string;
-  original_title?:string;
-  overview:string;
-  popularity?:number;
-  poster_path?:string;
-  release_date:Date;
-  title:string;
-  video?:boolean;
-  vote_average?:number;
-  vote_count?:number;
+  adult?: boolean;
+  backdrop_path?: string;
+  genre_ids?: any[];
+  id: number;
+  original_language?: string;
+  original_title?: string;
+  overview: string;
+  popularity?: number;
+  poster_path?: string;
+  release_date: Date;
+  title: string;
+  video?: boolean;
+  vote_average?: number;
+  vote_count?: number;
 }
 
 @Component({
@@ -34,56 +36,59 @@ export interface MovieResults {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  /*private urlApi = environment.urlApi*/
+  private urlApi = 'https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&language=en-US'
   movies: MovieResults[] = [];
-  totalResults: any;
-  /*page: number = 1;
-  pager: any = {};*/
-  /*pagedItems: any[] = [];*/
-  svc:any;
-  /*public pageSlice = this.carditems.slice(0,20)*/
+  data: any;
 
   constructor(
-    /*private http: HttpClient,*/
-    svc:NewServiceService
+    private http: HttpClient,
   ) {
-    this.svc = svc
   }
 
+  /*changeUrl(): string{
+    /!*console.log(this.pageEvent.pageIndex)*!/
+    return this.urlApi + "&page=" + this.pageEvent.pageIndex
+  }*/
+
+  getFirst(): Observable<Array<MovieResults>> {
+    return this.data = this.http.get<Movie>(this.urlApi + `&page=1`).pipe(
+      map(x => x.results)
+    )
+  }
+
+  getData(event: PageEvent): Observable<Array<MovieResults>> {
+    if(event){
+      this.data = this.http.get<Movie>(this.urlApi + `&page=${event.pageIndex+1}`).pipe(
+      map(x => x.results)
+    ).subscribe((response: Array<MovieResults>) => {
+      this.movies = response;});
+      console.log(this.data)
+    }
+    return this.data
+  }
+
+ /* getResponse(): Observable<any> {
+    return this.http.get<any>(this.urlApi).pipe(tap(response => {
+        response.total_results
+      }
+    ))
+  }*/
+
   ngOnInit(): void {
-    this.svc.getData().subscribe((response: Array<MovieResults>) => {
-      this.movies = response;
-      console.log(this.movies)
-      this.svc.getResponse().subscribe((res:any)=> {
+    this.getFirst().subscribe((response: Array<MovieResults>) => {
+      this.movies = response;});
+    /*console.log(this.pageEvent.pageIndex)
+    this.getData().subscribe((response: Array<MovieResults>) => {
+      this.movies = response;*/
+      /*console.log(this.movies)*/
+      /*this.getResponse().subscribe((res: any) => {
+        /!*console.log(this.page)*!/
         this.totalResults = res.total_results
-      })
-    }, /*(error) => {
+      })*/
+    /*},*/ /*(error) => {
       console.log('error', error);
     }, () => {
       console.log('complete');
-    }*/);
+    }*//*);*/
   }
-
-  OnPageChange(event:PageEvent) {
-    console.log(this.svc.page)
-    const startIndex = 0
-    let endIndex = 20
-    if (endIndex> this.movies.length){
-      endIndex=this.movies.length;
-    }
-    return this.svc.page = event.pageIndex+1
-  }
-
-  /*OnPageChange(event:PageEvent) {
-    /!*if (page < 1 || page > this.totalPages) {
-      return;
-    }*!/
-     console.log(event.pageIndex+1)
-    // get pager object from service
-    /!*this.pager = this.pagerService.getPager(this.totalPages, page);*!/
-
-    // get current page of items
-    /!*this.pagedItems = this.movies.slice(this.pager.startIndex, this.pager.endIndex + 1);*!/
-    /!*this.pagedItems = this.movies;*!/
-  }*/
 }
