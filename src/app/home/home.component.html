@@ -1,29 +1,39 @@
 
 <div>
-  <div class="container">
     <div class="text-center">
       <div class="card">
         <div class="card-header">
           <mat-toolbar color="primary">
-            <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-              <mat-icon>menu</mat-icon>
-            </button>
-            <span>My App</span>
-            <span class="header-spacer"></span>
-            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-              <mat-icon>favorite</mat-icon>
-            </button>
-            <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-              <mat-icon>share</mat-icon>
-            </button>
+              <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+              </button>
+              <span>My App</span>
+              <span class="header-spacer"></span>
+              <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+                <mat-icon>share</mat-icon>
+              </button>
           </mat-toolbar>
         </div>
-        <h1>Latest Release</h1>
-        <div class="card-body">
+        <div class="container">
+        <span class="toggle-bar">
+          <h1>Latest Release</h1>
+          <button (click)="listToggle = !listToggle">Toggle</button>
+        </span>
+        <div class="card-body" [ngStyle]="{
+        flexDirection: listToggle ? 'row' : 'column'
+        }">
           <div *ngFor="let item of movies">
-            <mat-card class="poster-card">
+            <mat-card class="poster-card" [ngStyle]="{
+              maxWidth: listToggle ? '324px' : '100%',
+              display: listToggle ? 'block' : 'flex'
+            }">
               <mat-card-subtitle>{{item.id}}</mat-card-subtitle>
-              <img mat-card-image src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія">
+              <img mat-card-image class='poster-img' src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія" [ngStyle]="{
+              maxWidth: listToggle ? '100%' : '10%'
+            }">
                 <mat-card-title>{{item.title}}</mat-card-title>
               <mat-card-content>{{item.overview}}</mat-card-content>
               </mat-card>

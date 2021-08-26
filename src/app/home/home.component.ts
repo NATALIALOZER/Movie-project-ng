@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
   movies: MovieResults[] = [];
   data: any;
   length: number = 1070
+  listToggle = false;
 
   constructor(
     private http: HttpClient,
