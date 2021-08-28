@@ -8,10 +8,12 @@ import {MatCardModule} from "@angular/material/card";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {HoverClassDirective} from "../directives/hover-class.directive";
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    HoverClassDirective
   ],
   imports: [
     CommonModule,

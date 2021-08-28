@@ -1,45 +1,47 @@
 
 <div>
-    <div class="text-center">
-      <div class="card">
-        <div class="card-header">
-          <mat-toolbar color="primary">
-              <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-                <mat-icon>menu</mat-icon>
-              </button>
-              <span>My App</span>
-              <span class="header-spacer"></span>
-              <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-                <mat-icon>favorite</mat-icon>
-              </button>
-              <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-                <mat-icon>share</mat-icon>
-              </button>
-          </mat-toolbar>
-        </div>
-        <div class="container">
+      <div class="header">
+        <mat-toolbar class="header-toolbar">
+            <span><img src="" alt="Logo" width="40px" height="40px"></span>
+            <span>Movies</span>
+            <span class="header-spacer"></span>
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+              <span>Favorite </span>
+              <mat-icon>favorite</mat-icon>
+            </button>
+        </mat-toolbar>
+      </div>
+      <div class="container">
         <span class="toggle-bar">
           <h1>Latest Release</h1>
-          <button (click)="listToggle = !listToggle">Toggle</button>
+          <button appHoverClass="btn-primary" class="btn" (click)="listToggle = !listToggle">Change view</button>
         </span>
-        <div class="card-body" [ngStyle]="{
-        flexDirection: listToggle ? 'row' : 'column'
+        <div class="main-blocks">
+          <div *ngFor="let item of movies; let i = index " class="block" [ngStyle]="{
+          display: listToggle ? 'none' : 'flex'
         }">
-          <div *ngFor="let item of movies">
-            <mat-card class="poster-card" [ngStyle]="{
-              maxWidth: listToggle ? '324px' : '100%',
-              display: listToggle ? 'block' : 'flex'
-            }">
-              <mat-card-subtitle>{{item.id}}</mat-card-subtitle>
-              <img mat-card-image class='poster-img' src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія" [ngStyle]="{
-              maxWidth: listToggle ? '100%' : '10%'
-            }">
+            <mat-card appHoverClass="card-hover"  class="card">
+              <img mat-card-image class='card-img' src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія">
+              <div class="card-content">
                 <mat-card-title>{{item.title}}</mat-card-title>
-              <mat-card-content>{{item.overview}}</mat-card-content>
+                <mat-card-content>{{item.overview}}</mat-card-content>
+              </div>
               </mat-card>
           </div>
         </div>
-      </div>
+        <div class="main-list">
+          <div *ngFor="let item of movies; let i = index" class="list-item" [ngStyle]="{
+          display: listToggle ? 'flex' : 'none'
+        }">
+            <mat-card appHoverClass="card-hover"  class="card">
+              <img mat-card-image class='card-img' src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія">
+              <div class="card-content">
+                <mat-card-title>{{item.title}}</mat-card-title>
+                <mat-card-content>{{item.overview}}</mat-card-content>
+              </div>
+            </mat-card>
+          </div>
+        </div>
       <mat-paginator style-paginator showFirstLastButtons [length]="length"
                      [pageSize]="20"
                      [hidePageSize] = 'true'
@@ -47,8 +49,4 @@
                      (page)="getDataEvent($event)">
       </mat-paginator>
     </div>
-  </div>
-  <hr />
-  <div class="credits text-center">
-  </div>
 </div>

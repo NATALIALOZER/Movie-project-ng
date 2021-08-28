@@ -14,6 +14,7 @@ export interface Movie {
 }
 
 export interface MovieResults {
+  applyClass: string;
   adult?: boolean;
   backdrop_path?: string;
   genre_ids?: any[];
@@ -39,13 +40,14 @@ export class HomeComponent implements OnInit {
   private urlApi = 'https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&language=en-US'
   movies: MovieResults[] = [];
   data: any;
-  length: number = 1070
+  length: number = 0
   listToggle = false;
 
   constructor(
     private http: HttpClient,
   ) {
   }
+
 
   getData(): Observable<Array<MovieResults>> {
     return this.data = this.http.get<Movie>(this.urlApi + `&page=1`).pipe(
@@ -78,6 +80,4 @@ export class HomeComponent implements OnInit {
         this.length = res.total_results
       })
   }
-
-
 }
