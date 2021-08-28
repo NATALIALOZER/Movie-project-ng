@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {map, tap} from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
+import {HomeService} from "./home.service";
 
 
 export interface Movie {
@@ -45,14 +46,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    private home: HomeService
   ) {
-  }
-
-
-  getData(): Observable<Array<MovieResults>> {
-    return this.data = this.http.get<Movie>(this.urlApi + `&page=1`).pipe(
-      map(x => x.results)
-    )
   }
 
   getDataEvent(event: PageEvent): Observable<Array<MovieResults>> {
@@ -66,17 +61,10 @@ export class HomeComponent implements OnInit {
     return this.data
   }
 
-  getResponse(): Observable<any> {
-    return this.http.get<any>(this.urlApi).pipe(tap(response => {
-        response.total_results
-      }
-    ))
-  }
-
   ngOnInit(): void {
-    this.getData().subscribe((response: Array<MovieResults>) => {
+    this.home.getData().subscribe((response: Array<MovieResults>) => {
       this.movies = response;});
-      this.getResponse().subscribe((res: any) => {
+      this.home.getResponse().subscribe((res: any) => {
         this.length = res.total_results
       })
   }
