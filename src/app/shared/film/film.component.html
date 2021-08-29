@@ -1,0 +1,13 @@
+<div class="main-blocks">
+  <div *ngFor="let item of movies">
+    <mat-card appHoverClass="card-hover"  class="card">
+      <img mat-card-image class='card-img' *ngIf="item.poster_path" src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "poster_image">
+      <div class="card-content">
+        <mat-card-title *ngIf="item.title; else noTitle">{{item.title}}</mat-card-title>
+        <ng-template #noTitle>There is no title for this movie =(</ng-template>
+        <mat-card-content *ngIf="item.overview; else noDesc">{{item.overview}}</mat-card-content>
+        <ng-template #noDesc>There is no description for this movie =(</ng-template>
+      </div>
+    </mat-card>
+  </div>
+</div>

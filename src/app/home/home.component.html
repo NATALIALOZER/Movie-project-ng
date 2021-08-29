@@ -1,52 +1,31 @@
 
 <div>
-      <div class="header">
-        <mat-toolbar class="header-toolbar">
-            <span><img src="" alt="Logo" width="40px" height="40px"></span>
-            <span>Movies</span>
-            <span class="header-spacer"></span>
-            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-              <span>Favorite </span>
-              <mat-icon>favorite</mat-icon>
-            </button>
-        </mat-toolbar>
-      </div>
+    <div class="header">
+      <mat-toolbar class="header-toolbar">
+          <span><img src="https://angular.io/assets/images/logos/angular/angular_whiteTransparent.png" alt="Logo" width="40px" height="40px"></span>
+          <span>Movies</span>
+          <span class="header-spacer"></span>
+          <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+            <span>Favorite </span>
+            <mat-icon>favorite</mat-icon>
+          </button>
+      </mat-toolbar>
+    </div>
+    <div class="main">
       <div class="container">
         <span class="toggle-bar">
           <h1>Latest Release</h1>
-          <button appHoverClass="btn-primary" class="btn" (click)="listToggle = !listToggle">Change view</button>
+          <button appHoverClass="btn-primary" class="btn" (click)="toggleClass($event)">Change view</button>
         </span>
-        <div class="main-blocks">
-          <div *ngFor="let item of movies; let i = index " class="block" [ngStyle]="{
-          display: listToggle ? 'none' : 'flex'
-        }">
-            <mat-card appHoverClass="card-hover"  class="card">
-              <img mat-card-image class='card-img' src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія">
-              <div class="card-content">
-                <mat-card-title>{{item.title}}</mat-card-title>
-                <mat-card-content>{{item.overview}}</mat-card-content>
-              </div>
-              </mat-card>
-          </div>
+        <div class="changer main-body">
+            <app-film [movies]="movies"></app-film>
         </div>
-        <div class="main-list">
-          <div *ngFor="let item of movies; let i = index" class="list-item" [ngStyle]="{
-          display: listToggle ? 'flex' : 'none'
-        }">
-            <mat-card appHoverClass="card-hover"  class="card">
-              <img mat-card-image class='card-img' src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "Фотографія">
-              <div class="card-content">
-                <mat-card-title>{{item.title}}</mat-card-title>
-                <mat-card-content>{{item.overview}}</mat-card-content>
-              </div>
-            </mat-card>
-          </div>
-        </div>
-      <mat-paginator style-paginator showFirstLastButtons [length]="length"
-                     [pageSize]="20"
-                     [hidePageSize] = 'true'
+        <mat-paginator style-paginator showFirstLastButtons [length]="length"
+                       [pageSize]="20"
+                       [hidePageSize] = 'true'
 
-                     (page)="getDataEvent($event)">
-      </mat-paginator>
+                       (page)="getDataEvent($event)">
+        </mat-paginator>
+      </div>
     </div>
 </div>

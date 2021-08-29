@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
-import {HomeService} from "./home.service";
+import { HomeService } from './home.service';
+
+
 
 
 export interface Movie {
@@ -24,7 +26,7 @@ export interface MovieResults {
   original_title?: string;
   overview: string;
   popularity?: number;
-  poster_path?: string;
+  poster_path: string;
   release_date: Date;
   title: string;
   video?: boolean;
@@ -39,10 +41,9 @@ export interface MovieResults {
 })
 export class HomeComponent implements OnInit {
   private urlApi = 'https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&language=en-US'
-  movies: MovieResults[] = [];
+  public movies: MovieResults[] = [];
   data: any;
   length: number = 0
-  listToggle = false;
 
   constructor(
     private http: HttpClient,
@@ -66,6 +67,19 @@ export class HomeComponent implements OnInit {
       this.movies = response;});
       this.home.getResponse().subscribe((res: any) => {
         this.length = res.total_results
+        /*console.log(this.length)*/
       })
   }
+
+
+
+  toggleClass = (event:any) => {
+    let mainBodyClass = event.target.parentElement.parentElement.getElementsByClassName('changer')[0]
+    let changer = mainBodyClass.firstChild.firstChild
+    changer.classList.toggle('main-list');
+    changer.classList.toggle('main-blocks');
+    console.log(changer.classList)
+  }
+
+
 }
