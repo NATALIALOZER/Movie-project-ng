@@ -4,9 +4,7 @@ import {map} from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 import { HomeService } from './home.service';
-
-
-
+import {environment} from "../../environments/environment";
 
 export interface Movie {
   dates?: any;
@@ -40,7 +38,7 @@ export interface MovieResults {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  private urlApi = 'https://api.themoviedb.org/3/movie/now_playing?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&language=en-US'
+  private urlApi = environment.urlApi
   public movies: MovieResults[] = [];
   data: any;
   length: number = 0
@@ -71,8 +69,6 @@ export class HomeComponent implements OnInit {
       })
   }
 
-
-
   toggleClass = (event:any) => {
     let mainBodyClass = event.target.parentElement.parentElement.getElementsByClassName('changer')[0]
     let changer = mainBodyClass.firstChild.firstChild
@@ -80,6 +76,4 @@ export class HomeComponent implements OnInit {
     changer.classList.toggle('main-blocks');
     console.log(changer.classList)
   }
-
-
 }

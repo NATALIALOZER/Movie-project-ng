@@ -8,8 +8,11 @@ const routes: Routes = [
   {
     path: '', redirectTo: 'home', pathMatch: 'full'
   },
-  {
+  /*{
     path: '**',redirectTo:'home'
+  },*/
+  {
+    path: 'favorite', loadChildren: () => import('./favorite/favorite.module').then(m => m.FavoriteModule)
   }
 ];
 

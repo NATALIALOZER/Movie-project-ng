@@ -27,40 +27,6 @@ a {
   }
 }
 
-ul {
-  list-style: none;
-}
-
-img {
-  margin-right: 15px;
-}
-
-.container {
-  max-width: 1440px;
-  margin: auto;
-  overflow: hidden;
-  padding: 0 2rem;
-}
-
-.text-primary {
-  color: #474D59;
-}
-.text-dark {
-  color: black;
-}
-
-.text-success {
-  color: palegreen;
-}
-
-.text-danger {
-  color: red;
-}
-
-.text-center {
-  text-align: center;
-}
-
 .header-toolbar{
   background-color: #474D59;
   color: white;
@@ -73,10 +39,4 @@ img {
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
-}
-
-.main{
-  .main-body{
-
-  }
 }

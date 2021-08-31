@@ -1,16 +1,5 @@
-
 <div>
-    <div class="header">
-      <mat-toolbar class="header-toolbar">
-          <span><img src="https://angular.io/assets/images/logos/angular/angular_whiteTransparent.png" alt="Logo" width="40px" height="40px"></span>
-          <span>Movies</span>
-          <span class="header-spacer"></span>
-          <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-            <span>Favorite </span>
-            <mat-icon>favorite</mat-icon>
-          </button>
-      </mat-toolbar>
-    </div>
+  <app-header></app-header>
     <div class="main">
       <div class="container">
         <span class="toggle-bar">
@@ -23,7 +12,6 @@
         <mat-paginator style-paginator showFirstLastButtons [length]="length"
                        [pageSize]="20"
                        [hidePageSize] = 'true'
-
                        (page)="getDataEvent($event)">
         </mat-paginator>
       </div>

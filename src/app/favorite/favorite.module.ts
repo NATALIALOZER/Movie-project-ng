@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { FavoriteRoutingModule } from './favorite-routing.module';
 import { FavoriteComponent } from './favorite.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -11,7 +15,11 @@ import { FavoriteComponent } from './favorite.component';
   ],
   imports: [
     CommonModule,
-    FavoriteRoutingModule
+    FavoriteRoutingModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    SharedModule
   ]
 })
 export class FavoriteModule { }

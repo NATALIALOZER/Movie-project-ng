@@ -1,12 +1,22 @@
 <div class="main-blocks">
   <div *ngFor="let item of movies">
-    <mat-card appHoverClass="card-hover"  class="card">
+    <mat-card appHoverClass="card-hover"  class="card" [id]="item.id">
       <img mat-card-image class='card-img' *ngIf="item.poster_path" src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "poster_image">
       <div class="card-content">
         <mat-card-title *ngIf="item.title; else noTitle">{{item.title}}</mat-card-title>
         <ng-template #noTitle>There is no title for this movie =(</ng-template>
         <mat-card-content *ngIf="item.overview; else noDesc">{{item.overview}}</mat-card-content>
         <ng-template #noDesc>There is no description for this movie =(</ng-template>
+        <mat-card-actions *ngIf="!checkLocation(); else onFavPage" >
+          <button *ngIf="!checkFav(item.id)" mat-icon-button class="favorite-icon" (click)="addToFavorite($event)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </mat-card-actions>
+        <ng-template #onFavPage>
+          <button mat-icon-button (click)="removeFromFavorite(item.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-template>
       </div>
     </mat-card>
   </div>
