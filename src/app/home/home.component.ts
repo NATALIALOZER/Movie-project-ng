@@ -15,8 +15,9 @@ export interface Movie {
 }
 
 export interface MovieResults {
+  ratings: any;
   applyClass: string;
-  adult?: boolean;
+  adult: boolean;
   backdrop_path?: string;
   genre_ids?: any[];
   id: number;
@@ -55,7 +56,6 @@ export class HomeComponent implements OnInit {
       map(x => x.results)
     ).subscribe((response: Array<MovieResults>) => {
       this.movies = response;});
-      console.log(this.data)
     }
     return this.data
   }
@@ -74,6 +74,5 @@ export class HomeComponent implements OnInit {
     let changer = mainBodyClass.firstChild.firstChild
     changer.classList.toggle('main-list');
     changer.classList.toggle('main-blocks');
-    console.log(changer.classList)
   }
 }

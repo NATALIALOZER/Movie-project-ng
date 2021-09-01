@@ -33,7 +33,6 @@ export class FavoriteService {
       // @ts-ignore
       favolist.push(this.get(localStorage.key(i)))
     }
-    console.log(favolist)
     return favolist
   }
 
