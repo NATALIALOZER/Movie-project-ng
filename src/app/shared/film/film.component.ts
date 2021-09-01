@@ -12,10 +12,7 @@ export class FilmComponent implements OnInit {
   @Input() movies: MovieResults[] = [];
   location: Location;
 
-  /*favorites: any[] = []*/
-
   constructor(private fav:FavoriteService,location: Location) {this.location = location; }
-
 
   ngOnInit(): void {
   }
@@ -34,7 +31,6 @@ export class FilmComponent implements OnInit {
     storage['poster_path'] = m_poster.src
     console.log(storage['title'],storage['overview'])
     this.fav.set(id, storage)
-
     /*localStorage.clear()*/
   }
 
@@ -44,14 +40,9 @@ export class FilmComponent implements OnInit {
     return this.fav.remove(id)
   }
 
-  checkFav(id:any): any {
+  checkFav(id:number): any {
     return !!this.fav.get(id);
   }
-
-  /*checkRemove(id:any):any{
-    return !!this.fav.get(id);
-  }*/
-
 
   checkLocation() {
     return this.location.path()==='/favorite'
