@@ -3,6 +3,7 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 import {MovieResults} from "../../home/home.component";
 import {FavoriteService} from "./favorite.service";
 import {Location} from "@angular/common";
+
 @Component({
   selector: 'app-film',
   templateUrl: './film.component.html',
@@ -10,6 +11,7 @@ import {Location} from "@angular/common";
 })
 export class FilmComponent implements OnInit {
   @Input() movies: MovieResults[] = [];
+
   location: Location;
 
   constructor(private fav:FavoriteService,location: Location) {this.location = location; }
@@ -48,5 +50,16 @@ export class FilmComponent implements OnInit {
 
   checkLocation() {
     return this.location.path()==='/favorite'
+  }
+
+  /*openModal(event:any) {
+    if(event.target.closest(".card")){
+      console.log(event.target.closest(".card"))
+      let dialog =
+      this.dialog.open(event.target)
+    }
+  }*/
+  openDetails(id:number) {
+
   }
 }

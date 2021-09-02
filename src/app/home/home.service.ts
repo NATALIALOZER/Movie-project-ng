@@ -19,10 +19,15 @@ export class HomeService {
     )
   }
 
+
   getResponse(): Observable<any> {
     return this.http.get<any>(this.urlApi).pipe(tap(response => {
         response.total_results
       }
     ))
   }
+
+  /*getById(id:number){
+    return this.http
+  }*/
 }

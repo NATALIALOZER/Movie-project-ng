@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 import { HomeService } from './home.service';
 import {environment} from "../../environments/environment";
+/*import {ActivatedRoute} from "@angular/router";*/
+
 
 export interface Movie {
   dates?: any;
@@ -46,7 +48,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private home: HomeService
+    private home: HomeService,
+    /*private route: ActivatedRoute*/
   ) {
   }
 
@@ -54,9 +57,7 @@ export class HomeComponent implements OnInit {
     if(event){
       this.data = this.http.get<Movie>(this.urlApi + `&page=${event.pageIndex+1}`).pipe(
       map(x => x.results)
-    ).subscribe((response: Array<MovieResults>) => {
-      this.movies = response;});
-    }
+    )}
     return this.data
   }
 
@@ -65,7 +66,7 @@ export class HomeComponent implements OnInit {
       this.movies = response;});
       this.home.getResponse().subscribe((res: any) => {
         this.length = res.total_results
-        /*console.log(this.length)*/
+        /*this.page = res.page*/
       })
   }
 
@@ -75,4 +76,5 @@ export class HomeComponent implements OnInit {
     changer.classList.toggle('main-list');
     changer.classList.toggle('main-blocks');
   }
+
 }

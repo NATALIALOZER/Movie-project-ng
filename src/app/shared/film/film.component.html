@@ -1,15 +1,23 @@
 <div class="main-blocks">
   <div *ngFor="let item of movies">
-    <mat-card appHoverClass="card-hover"  class="card" [id]="item.id">
+    <mat-card appHoverClass="card-hover"   class="card" [id]="item.id" >
       <img mat-card-image class='card-img' *ngIf="item.poster_path" src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "poster_image">
       <div class="card-content">
         <mat-card-title *ngIf="item.title; else noTitle">{{item.title}}</mat-card-title>
         <ng-template #noTitle>There is no title for this movie =(</ng-template>
-        <mat-card-content *ngIf="item.overview; else noDesc"><p class="desc">{{item.overview}}</p><hr><p class="ratings" *ngIf="!checkLocation(); else onFavPageScore">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p><ng-template #onFavPageScore><p>{{item.ratings}}</p></ng-template></mat-card-content>
+        <mat-card-content *ngIf="item.overview; else noDesc">
+          <p class="desc">{{item.overview}}</p><hr><p class="ratings" *ngIf="!checkLocation(); else onFavPageScore">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p>
+          <ng-template #onFavPageScore>
+            <p>{{item.ratings}}</p>
+          </ng-template>
+        </mat-card-content>
         <ng-template #noDesc>There is no description for this movie =(</ng-template>
         <mat-card-actions *ngIf="!checkLocation(); else onFavPage">
           <button *ngIf="!checkFav(item.id)" mat-icon-button class="favorite-icon" (click)="addToFavorite($event)">
             <mat-icon>favorite</mat-icon>
+          </button>
+          <button [routerLink]="['/about', item.id]" mat-icon-button (click)="openDetails(item.id)">
+            <mat-icon class="btn_img">subject</mat-icon>
           </button>
         </mat-card-actions>
         <ng-template #onFavPage>
