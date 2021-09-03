@@ -48,26 +48,28 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private home: HomeService,
-    /*private route: ActivatedRoute*/
+    private home: HomeService
   ) {
   }
 
   getDataEvent(event: PageEvent): Observable<Array<MovieResults>> {
     if(event){
       this.data = this.http.get<Movie>(this.urlApi + `&page=${event.pageIndex+1}`).pipe(
-      map(x => x.results)
-    )}
+        map(x => x.results)
+      ).subscribe((response: Array<MovieResults>) => {
+        this.movies = response;});
+      console.log(this.data)
+    }
     return this.data
   }
 
   ngOnInit(): void {
     this.home.getData().subscribe((response: Array<MovieResults>) => {
       this.movies = response;});
-      this.home.getResponse().subscribe((res: any) => {
-        this.length = res.total_results
-        /*this.page = res.page*/
-      })
+    this.home.getResponse().subscribe((res: any) => {
+      this.length = res.total_results
+      /*console.log(this.length)*/
+    })
   }
 
   toggleClass = (event:any) => {
@@ -75,6 +77,6 @@ export class HomeComponent implements OnInit {
     let changer = mainBodyClass.firstChild.firstChild
     changer.classList.toggle('main-list');
     changer.classList.toggle('main-blocks');
+    console.log(changer.classList)
   }
-
 }
