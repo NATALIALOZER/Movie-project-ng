@@ -43,8 +43,10 @@ export interface MovieResults {
 export class HomeComponent implements OnInit {
   private urlApi = environment.urlApi
   public movies: MovieResults[] = [];
-  data: any;
+  public data: any;
   length: number = 0
+  public page: any;
+
 
   constructor(
     private http: HttpClient,
@@ -52,24 +54,31 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  getDataEvent(event: PageEvent): Observable<Array<MovieResults>> {
+
+  getDataEvent(event: PageEvent): any[] {
     if(event){
+      this.page = event.pageIndex+1
       this.data = this.http.get<Movie>(this.urlApi + `&page=${event.pageIndex+1}`).pipe(
         map(x => x.results)
       ).subscribe((response: Array<MovieResults>) => {
         this.movies = response;});
-      console.log(this.data)
+
     }
-    return this.data
+    /*console.log(this.page)*/
+    return [this.data, this.page]
   }
 
+
+
   ngOnInit(): void {
+
     this.home.getData().subscribe((response: Array<MovieResults>) => {
       this.movies = response;});
     this.home.getResponse().subscribe((res: any) => {
       this.length = res.total_results
       /*console.log(this.length)*/
     })
+
   }
 
   toggleClass = (event:any) => {
@@ -77,6 +86,5 @@ export class HomeComponent implements OnInit {
     let changer = mainBodyClass.firstChild.firstChild
     changer.classList.toggle('main-list');
     changer.classList.toggle('main-blocks');
-    console.log(changer.classList)
   }
 }

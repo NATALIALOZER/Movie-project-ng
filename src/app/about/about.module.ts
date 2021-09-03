@@ -6,6 +6,8 @@ import {AboutRoutingModule} from "./about-routing.module";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {HttpClientModule} from "@angular/common/http";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -15,11 +17,14 @@ import {MatButtonModule} from "@angular/material/button";
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     AboutRoutingModule,
+    MatCardModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    SharedModule
+    SharedModule,
+    MatCardModule
   ]
 })
 export class AboutModule { }

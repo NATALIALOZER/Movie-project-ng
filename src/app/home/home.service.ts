@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {map, tap} from "rxjs/operators";
 import {Movie, MovieResults} from "./home.component";
 import {environment} from "../../environments/environment";
+import {forEach, result} from "underscore";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,11 @@ export class HomeService {
     ))
   }
 
-  /*getById(id:number){
-    return this.http
-  }*/
+  getById(page:number):any{
+    let u = this.urlApi + `&page=` + page
+    console.log(u)
+    return this.http.get<any>(u).pipe(
+      map(x => x.results)
+    )
+  }
 }

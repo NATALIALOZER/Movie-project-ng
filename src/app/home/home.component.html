@@ -1,5 +1,5 @@
 <div>
-  <app-header ></app-header>
+  <app-header></app-header>
     <div class="main">
       <div class="container">
         <span class="toggle-bar">
@@ -7,7 +7,7 @@
           <button appHoverClass="btn-primary" class="btn" (click)="toggleClass($event)">Change view</button>
         </span>
         <div class="changer main-body">
-            <app-film [movies]="movies"></app-film>
+            <app-film [movies]="movies" [page]="page"></app-film>
         </div>
         <mat-paginator style-paginator showFirstLastButtons [length]="length"
                        [pageSize]="20"

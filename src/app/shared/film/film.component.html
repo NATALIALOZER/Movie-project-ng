@@ -16,9 +16,14 @@
           <button *ngIf="!checkFav(item.id)" mat-icon-button class="favorite-icon" (click)="addToFavorite($event)">
             <mat-icon>favorite</mat-icon>
           </button>
-          <button [routerLink]="['/about', item.id]" mat-icon-button (click)="openDetails(item.id)">
+          <button *ngIf="page; else onFirstPage" [routerLink]="['/about', page, item.id]" mat-icon-button (click)="openDetails($event)">
             <mat-icon class="btn_img">subject</mat-icon>
           </button>
+          <ng-template #onFirstPage>
+            <button [routerLink]="['/about', 1, item.id]" mat-icon-button (click)="openDetails($event)">
+              <mat-icon class="btn_img">subject</mat-icon>
+            </button>
+          </ng-template>
         </mat-card-actions>
         <ng-template #onFavPage>
           <button mat-icon-button (click)="removeFromFavorite(item.id)">
