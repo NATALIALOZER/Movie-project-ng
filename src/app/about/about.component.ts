@@ -15,11 +15,11 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params)=>{
-      console.log('Params: ', params)
+      /*console.log('Params: ', params)*/
       let current_id = params.id
       let current_page = params.page
       this.home.getById(current_page).subscribe((response: Array<any>) => {
-        console.log(response.filter(el=>el.id == current_id));
+        /*console.log(response.filter(el=>el.id == current_id));*/
         this.current_movie = response.filter(el=>el.id == current_id);
       });
     })

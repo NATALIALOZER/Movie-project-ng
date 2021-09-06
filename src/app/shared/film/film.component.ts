@@ -15,21 +15,13 @@ export class FilmComponent implements OnInit {
   @Input() movies: MovieResults[] = [];
   @Input() page: any;
   location: Location;
-  /*private carddata: any;*/
 
   constructor(private fav: FavoriteService, location: Location, private home: HomeService) {
     this.location = location;
   }
 
-
   ngOnInit(): void {
-    console.log(this.page)
-
-    /*    this.home.getResponse().subscribe((res: any) => {
-          this.page = res.page
-          console.log(this.page)
-        })*/
-
+    /*console.log(this.page)*/
   }
 
   addToFavorite(event: any) {
@@ -64,19 +56,7 @@ export class FilmComponent implements OnInit {
     return this.location.path() === '/favorite'
   }
 
-  /*openModal(event:any) {
-    if(event.target.closest(".card")){
-      console.log(event.target.closest(".card"))
-      let dialog =
-      this.dialog.open(event.target)
-    }
-  }*/
-
-
   openDetails(event:any) {
-    /*if(event.target.closest(".card")){
-      this.carddata = event.target.closest(".card")
-    }*/
-  }
 
+  }
 }

@@ -1,16 +1,17 @@
 <div>
   <app-header></app-header>
-  <div class="about-frame" *ngFor="let item of current_movie">
+  <div class="about-frame" *ngFor="let item of current_movie" [style.backgroundImage]="'url(http://image.tmdb.org/t/p/w342'+item.backdrop_path+')'"><div class="back">
     <mat-card class="card">
-      <img mat-card-image class='card-img' src='http://image.tmdb.org/t/p/w342{{item.backdrop_path}}' alt= "poster_image">
+      <img mat-card-image class='card-img' src='http://image.tmdb.org/t/p/w342{{item.poster_path}}' alt= "poster_image">
         <div class="card-box">
           <mat-card-title class="card-title" *ngIf="item.title; else noTitle">{{item.title}}</mat-card-title>
           <ng-template #noTitle>There is no title for this movie =(</ng-template>
-          <mat-card-content class="card-content" *ngIf="item.overview; else noDesc">
-            <p class="desc">{{item.overview}}</p><hr><p class="ratings">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p>
+          <mat-card-content class="card-content" *ngIf="item.overview; else noDesc"><p class="ratings">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p><hr><p class="desc">{{item.overview}}</p><hr>
           </mat-card-content>
           <ng-template #noDesc>There is no description for this movie =(</ng-template>
+
       </div>
     </mat-card>
+  </div>
   </div>
 </div>

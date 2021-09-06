@@ -10,12 +10,14 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {HomeRoutingModule} from "../home/home-routing.module";
+import { FavoriteButtonComponent } from './favorite_button/favorite-button.component';
 
 @NgModule({
   declarations: [
     FilmComponent,
     HoverClassDirective,
     HeaderComponent,
+    FavoriteButtonComponent,
   ],
   imports: [
     CommonModule,

@@ -1,25 +1,69 @@
+hr{
+  margin: 2rem 0;
+}
 .about-frame{
-  display: flex;
-  justify-content: center;
-  .card {
-    padding: 20px 0;
-    height: auto;
-    width: 50%;
-    margin: 1rem;
-    background: transparent;
+  position: relative;
 
+  height: calc(100vh - 64px);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 115%;
+  .card {
+    padding: 160px 0;
+    height: auto;
+    width: 80%;
+    margin: 0 2rem;
+    background: transparent;
+    display: flex;
+    &:not([class*=mat-elevation-z]){
+      box-shadow: none;
+    }
     &-box {
       padding: 20px;
+      margin-left: 5%;
+      color: white;
     }
     &-img{
-      object-fit: cover;
+      width: 324px;
+      height: 460px;
+      margin: 0;
+      /*object-fit: cover;
       width: 100%;
-      margin: 0px -20px 20px 0px;
+      margin: 0px -20px 20px 0px;*/
     }
     &-img:first-child{
-      margin-top: -20px;
+      margin-top: 0;
+      border-radius: 0;
+    }
+    &-title{
+      font-size: 36px;
+      line-height: 42px;
+      font-weight: 300;
+      padding: 20px 0 ;
+    }
+    &-content{
+      .ratings{
+        font-weight: 300;
+        font-size: 24px;
+        padding: 20px 0 ;
+      }
+      .desc{
+        font-size: 18px;
+        line-height: 24px;
+        font-weight: 300;
+      }
     }
 
   }
+}
+.back{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  background-image: linear-gradient(black, #474D59);
+  opacity: 0.8;
 }
 

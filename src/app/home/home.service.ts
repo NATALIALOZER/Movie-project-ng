@@ -29,9 +29,7 @@ export class HomeService {
   }
 
   getById(page:number):any{
-    let u = this.urlApi + `&page=` + page
-    console.log(u)
-    return this.http.get<any>(u).pipe(
+    return this.http.get<any>(this.urlApi + `&page=` + page).pipe(
       map(x => x.results)
     )
   }

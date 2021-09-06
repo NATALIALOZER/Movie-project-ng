@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 import { HomeService } from './home.service';
 import {environment} from "../../environments/environment";
-/*import {ActivatedRoute} from "@angular/router";*/
 
 
 export interface Movie {
@@ -54,7 +53,6 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-
   getDataEvent(event: PageEvent): any[] {
     if(event){
       this.page = event.pageIndex+1
@@ -62,23 +60,17 @@ export class HomeComponent implements OnInit {
         map(x => x.results)
       ).subscribe((response: Array<MovieResults>) => {
         this.movies = response;});
-
     }
-    /*console.log(this.page)*/
     return [this.data, this.page]
   }
 
-
-
   ngOnInit(): void {
-
     this.home.getData().subscribe((response: Array<MovieResults>) => {
       this.movies = response;});
     this.home.getResponse().subscribe((res: any) => {
       this.length = res.total_results
       /*console.log(this.length)*/
     })
-
   }
 
   toggleClass = (event:any) => {
