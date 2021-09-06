@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import { HttpClient } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';

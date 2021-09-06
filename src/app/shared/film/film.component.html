@@ -5,17 +5,22 @@
       <div class="card-content">
         <mat-card-title *ngIf="item.title; else noTitle">{{item.title}}</mat-card-title>
         <ng-template #noTitle>There is no title for this movie =(</ng-template>
-        <mat-card-content *ngIf="item.overview; else noDesc">
-          <p class="desc">{{item.overview}}</p><hr><p class="ratings" *ngIf="!checkLocation(); else onFavPageScore">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p>
-          <ng-template #onFavPageScore>
-            <p>{{item.ratings}}</p>
-          </ng-template>
+        <mat-card-content *ngIf="item.overview && item.overview.length<=300; else longDesc">
+          <p class="desc">{{item.overview}}</p>
         </mat-card-content>
+        <ng-template #longDesc>
+          <mat-card-content *ngIf="item.overview && item.overview.length>300; else noDesc">
+            <p class="desc">{{item.overview.slice(0,300)}}...</p>
+          </mat-card-content>
+        </ng-template>
         <ng-template #noDesc>There is no description for this movie =(</ng-template>
-        <mat-card-actions *ngIf="!checkLocation(); else onFavPage">
-          <button *ngIf="!checkFav(item.id)" mat-icon-button class="favorite-icon" (click)="addToFavorite($event)">
-            <mat-icon>favorite</mat-icon>
-          </button>
+        <hr>
+        <p class="ratings" *ngIf="!checkLocation(); else onFavPageScore">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p>
+        <ng-template #onFavPageScore>
+          <p>{{item.ratings}}</p>
+        </ng-template>
+        <div class="action-btns">
+          <app-favorite-button [id]="item.id"></app-favorite-button>
           <button *ngIf="page; else onFirstPage" [routerLink]="['/about', page, item.id]" mat-icon-button (click)="openDetails($event)">
             <mat-icon class="btn_img">subject</mat-icon>
           </button>
@@ -24,12 +29,7 @@
               <mat-icon class="btn_img">subject</mat-icon>
             </button>
           </ng-template>
-        </mat-card-actions>
-        <ng-template #onFavPage>
-          <button mat-icon-button (click)="removeFromFavorite(item.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </ng-template>
+        </div>
       </div>
     </mat-card>
   </div>

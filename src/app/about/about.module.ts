@@ -13,7 +13,7 @@ import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +24,8 @@ import {MatCardModule} from "@angular/material/card";
     MatIconModule,
     MatButtonModule,
     SharedModule,
-    MatCardModule
+    MatCardModule,
+
   ]
 })
 export class AboutModule { }

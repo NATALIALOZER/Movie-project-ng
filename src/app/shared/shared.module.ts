@@ -28,7 +28,7 @@ import { FavoriteButtonComponent } from './favorite_button/favorite-button.compo
     MatButtonModule,
     HomeRoutingModule,
   ],
-  exports:[FilmComponent,HeaderComponent],
+  exports: [FilmComponent, HeaderComponent, FavoriteButtonComponent],
   providers: [
     HomeService
   ]
