@@ -3,12 +3,12 @@ hr{
 }
 .about-frame{
   position: relative;
-
   height: calc(100vh - 64px);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   .card {
+    flex-direction: row;
     padding: 160px 0;
     height: auto;
     width: 80%;
