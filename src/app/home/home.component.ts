@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   public movies: MovieResults[] = [];
   public data: any;
   length: number = 0
-  public page: any;
+  public page: number = 1;
 
 
   constructor(
@@ -52,10 +52,22 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
-  getDataEvent(event: PageEvent): any[] {
+  /*getDataEvent(event: PageEvent): any[] {
     if(event){
+      console.log(event)
       this.page = event.pageIndex+1
       this.data = this.http.get<Movie>(this.urlApi + `&page=${event.pageIndex+1}`).pipe(
+        map(x => x.results)
+      ).subscribe((response: Array<MovieResults>) => {
+        this.movies = response;});
+    }
+    return [this.data, this.page]
+  }*/
+
+  getDataEvent(event: number): [any,number] {
+    if(event){
+      this.page = event
+      this.data = this.http.get<Movie>(this.urlApi + `&page=${this.page}`).pipe(
         map(x => x.results)
       ).subscribe((response: Array<MovieResults>) => {
         this.movies = response;});

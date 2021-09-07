@@ -9,20 +9,19 @@
         <div class="changer main-body">
             <app-film [movies]="movies" [page]="page"></app-film>
         </div>
-        <!--<mat-paginator style-paginator showFirstLastButtons [length]="length"
-                       [pageSize]="20"
-                       [hidePageSize] = 'true'
-                       (page)="getDataEvent($event)">
-        </mat-paginator>-->
-        <ul class="pagination">
-          <li class="page-item"><a href="" class="page-link">First</a></li>
-          <li class="page-item"><a href="" class="page-link">Prev</a></li>
-          <li class="page-item"><a href="" class="page-link">1</a></li>
-          <li class="page-item"><a href="" class="page-link">2</a></li>
-          <li class="page-item"><a href="" class="page-link">3</a></li>
-          <li class="page-item"><a href="" class="page-link">Next</a></li>
-          <li class="page-item"><a href="" class="page-link">Last</a></li>
-        </ul>
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="20"
+          [collectionSize]="length"
+          (pageChange)="getDataEvent($event)"
+          [maxSize]="3" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+          ><ng-template ngbPaginationFirst>First</ng-template>
+          <ng-template ngbPaginationLast>Last</ng-template>
+          <ng-template ngbPaginationPrevious>Prev</ng-template>
+          <ng-template ngbPaginationNext>Next</ng-template>
+          <ng-template ngbPaginationEllipsis>...</ng-template>
+          <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+        </ngb-pagination>
       </div>
     </div>
 </div>
