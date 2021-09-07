@@ -9,11 +9,20 @@
         <div class="changer main-body">
             <app-film [movies]="movies" [page]="page"></app-film>
         </div>
-        <mat-paginator style-paginator showFirstLastButtons [length]="length"
+        <!--<mat-paginator style-paginator showFirstLastButtons [length]="length"
                        [pageSize]="20"
                        [hidePageSize] = 'true'
                        (page)="getDataEvent($event)">
-        </mat-paginator>
+        </mat-paginator>-->
+        <ul class="pagination">
+          <li class="page-item"><a href="" class="page-link">First</a></li>
+          <li class="page-item"><a href="" class="page-link">Prev</a></li>
+          <li class="page-item"><a href="" class="page-link">1</a></li>
+          <li class="page-item"><a href="" class="page-link">2</a></li>
+          <li class="page-item"><a href="" class="page-link">3</a></li>
+          <li class="page-item"><a href="" class="page-link">Next</a></li>
+          <li class="page-item"><a href="" class="page-link">Last</a></li>
+        </ul>
       </div>
     </div>
 </div>
