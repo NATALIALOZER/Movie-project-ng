@@ -1,0 +1,28 @@
+.main-block{
+  height: 100vh;
+  background-color: #474D59;
+}
+
+form{
+  background-color: transparent;
+  border: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  .form-control{
+    background-color: transparent;
+    color: white;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    font-size: 1.5rem;
+    input{
+      padding: 10px;
+      border-radius: 5px;
+    }
+  }
+  button{
+    margin: 0 auto;
+    width: 200px;
+  }
+}

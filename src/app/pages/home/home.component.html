@@ -2,12 +2,12 @@
   <app-header></app-header>
     <div class="main">
       <div class="container">
-        <span class="toggle-bar">
-          <h1>Latest Release</h1>
-          <button appHoverClass="btn-primary" class="btn" (click)="toggleClass($event)">Change view</button>
+        <span class="toggle-bar" [style]="{'font-size': '24px'}">
+          Latest Release
+          <button appHoverClass="btn-primary" class="btn" (click)="toggle=!toggle">Change view</button>
         </span>
         <div class="changer main-body">
-            <app-film [movies]="movies" [page]="page"></app-film>
+            <app-film [movies]="movies" [page]="page" [toggle]="toggle"></app-film>
         </div>
         <ngb-pagination
           [(page)]="page"

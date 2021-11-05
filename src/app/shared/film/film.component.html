@@ -1,4 +1,4 @@
-<div class="main-blocks">
+<div [ngClass]="{ list: toggle, blocks: !toggle }">
   <div *ngFor="let item of movies">
     <mat-card appHoverClass="card-hover"   class="card" [id]="item.id" >
       <img mat-card-image class='card-img' *ngIf="item.poster_path" src = 'http://image.tmdb.org/t/p/w342{{item.poster_path}}'  alt= "poster_image">

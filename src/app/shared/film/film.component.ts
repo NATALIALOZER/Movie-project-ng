@@ -1,36 +1,29 @@
-
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {MovieResults} from "../../home/home.component";
-import {FavoriteService} from "./favorite.service";
-import {Location} from "@angular/common";
-import {HomeService} from "../../home/home.service";
-import {PageEvent} from "@angular/material/paginator";
+import {Component, Input, OnInit} from '@angular/core';
+import {FavoriteService} from './favorite.service';
+import {Location} from '@angular/common';
+import {HomeService} from '../../pages/home/home.service';
+import {MovieResults} from '../models/interfaces';
 
 @Component({
   selector: 'app-film',
   templateUrl: './film.component.html',
   styleUrls: ['./film.component.scss']
 })
-export class FilmComponent implements OnInit {
-  @Input() movies: MovieResults[] = [];
-  @Input() page: any;
-  location: Location;
+export class FilmComponent {
+  @Input() public movies: MovieResults[] = [];
+  @Input() public page: any;
+  @Input() public toggle: boolean = false;
 
-  constructor(private fav: FavoriteService, location: Location, private home: HomeService) {
+  constructor( private fav: FavoriteService,
+               private location: Location ) {
     this.location = location;
   }
 
-  ngOnInit(): void {
-    /*console.log(this.page)*/
+  public checkLocation(): boolean {
+    return this.location.path() === '/favorite';
   }
 
-
-
-  checkLocation() {
-    return this.location.path() === '/favorite'
-  }
-
-  openDetails(event:any) {
+  public openDetails(event: Event): void {
 
   }
 }

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {FavoriteComponent} from "./favorite.component";
+import {LoginComponent} from './login.component';
 
 const routes: Routes = [{
-  path:'', component: FavoriteComponent
+  path: '', component: LoginComponent
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FavoriteRoutingModule { }
+export class LoginRoutingModule { }

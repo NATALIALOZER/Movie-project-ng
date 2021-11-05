@@ -3,19 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+    path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+  },
+  {
+    path: 'favorite', loadChildren: () => import('./pages/favorite/favorite.module').then(m => m.FavoriteModule)
+  },
+  {
+    path: 'about/:page/:id', loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule)
+  },
+  {
+    path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: '**', redirectTo: 'home'
   },
   {
     path: '', redirectTo: 'home', pathMatch: 'full'
-  },
-  /*{
-    path: '**',redirectTo:'home'
-  },*/
-  {
-    path: 'favorite', loadChildren: () => import('./favorite/favorite.module').then(m => m.FavoriteModule)
-  },
-  {
-    path: 'about/:page/:id', loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
   }
 ];
 

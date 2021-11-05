@@ -3,7 +3,7 @@
     <a [routerLink]="['/home']"><span><img src="https://angular.io/assets/images/logos/angular/angular_whiteTransparent.png" alt="Logo" width="40px" height="40px"></span>
       <span>Movies</span>
     </a>
-    <a routerLink="/favorite" >
+    <a *ngIf="locationPath!=='/login'" routerLink="/favorite" >
       <button mat-icon-button class="header_btn_favorite">
         <mat-icon class="btn_img">favorite</mat-icon>
         <span>Favorite </span>
