@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {Location} from '@angular/common';
+import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -8,6 +10,13 @@ import {Location} from '@angular/common';
 })
 export class HeaderComponent {
   public locationPath: string;
-  constructor(private location: Location ) { this.locationPath = location.path(); }
+  constructor(private location: Location,
+              public auth: AuthService,
+              private router: Router
+  ) { this.locationPath = location.path(); }
 
+  public logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
 }

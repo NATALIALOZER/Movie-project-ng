@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {movidbAuthResponse, User} from '../models/interfaces';
+import {Observable, of, Subject, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable()
 export class AuthService {
+  public error$: Subject<string> = new Subject<string>();
+
   constructor(private http: HttpClient) {
   }
   get token() {
@@ -17,47 +21,53 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  public login(user: User): any {
-    let dbData: movidbAuthResponse;
-    this.http.get<movidbAuthResponse>('https://api.themoviedb.org/3/authentication/token/new?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&')
-      .subscribe(
-      (response: movidbAuthResponse) => {
-        user.request_token = response.request_token;
-        dbData = response;
-      }
-    );
-
-    setTimeout(() => {
-      this.http.post
-      (`https://api.themoviedb.org/3/authentication/session/new?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&`, user.request_token )
-        .subscribe( () => {
-          this.setToken( dbData );
-        });
-
-    }, 100);
+  public login(body: User): Observable<any> {
+      return this.http.post
+      (`https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&`
+        , body).pipe(
+          catchError( error => {
+            return this.handleError(error);
+          })
+      );
   }
 
-  public logout() {
+  public logout(): any {
     return this.setToken(null);
   }
 
-  isAuthenticated(): boolean {
+   public isAuthenticated(): boolean {
     return !!this.token;
   }
 
-  private setToken(res: movidbAuthResponse | null) {
+  public getTokenFb(user: User): any {
+    return this.http.get<movidbAuthResponse>('https://api.themoviedb.org/3/authentication/token/new?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&');
+
+  }
+
+  public setToken(res: movidbAuthResponse | null): void {
     if (res) {
       this.http.get<movidbAuthResponse>('https://api.themoviedb.org/3/authentication/token/new?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&')
-      .subscribe(
-        (response: movidbAuthResponse) => {
-          /*user.request_token = response.request_token;*/
-          localStorage.setItem('token', response.request_token);
-          localStorage.setItem('token-exp', response.expires_at);
-          /*return user.request_token;*/
-        }
-      );
+        .subscribe(
+          (response: movidbAuthResponse) => {
+            localStorage.setItem('token', response.request_token);
+            localStorage.setItem('token-exp', response.expires_at);
+          }
+        );
     } else {
       localStorage.clear();
     }
+  }
+
+  private handleError(error: HttpErrorResponse ) {
+    const message = error.error.status_message;
+    switch (message) {
+      case 'Invalid username and/or password: You did not provide a valid login.':
+        this.error$.next('Invalid username and/or password');
+        break;
+      case 'Email not verified: Your email address has not been verified.':
+        this.error$.next('Email not verified');
+        break;
+    }
+    return throwError(error);
   }
 }
