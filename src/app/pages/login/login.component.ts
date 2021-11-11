@@ -58,16 +58,6 @@ export class LoginComponent implements OnInit {
 
         });
       }
-
-
     );
-
-
-      /*.subscribe((res: any) => {
-        console.log(res)
-      /!*this.form.reset();*!/
-      /!*this.router.navigate(['home']);*!/
-    });*/
-
   }
 }

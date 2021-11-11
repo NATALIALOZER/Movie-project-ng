@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public movies: MovieResults[] = [];
   public length: number = 0;
   public page: number = 1;
-  public subscription?: Subscription;
+  public subscription: Subscription = new Subscription();
   public toggle: boolean = false;
   constructor(
     private http: HttpClient,
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  public getDataEvent(event: number): [(Subscription | undefined), number] {
+  public getDataEvent(event: number): [Subscription, number] {
     if (event) {
       this.page = event;
       this.subscription = this.home.getDataEvent(event).subscribe((response: MovieResults[]) => {

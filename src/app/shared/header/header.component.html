@@ -3,14 +3,23 @@
     <a [routerLink]="['/home']"><span><img src="https://angular.io/assets/images/logos/angular/angular_whiteTransparent.png" alt="Logo" width="40px" height="40px"></span>
       <span>Movies</span>
     </a>
-    <div *ngIf="locationPath!=='/login'">
-      <button class="btn btn-danger" (click)="logout()">Exit</button>
-      <a routerLink="/favorite" >
+    <div class="d-flex">
+      <a class="me-4" *ngIf="locationPath!=='/login'&& locationPath!=='/login?loginAgain=true'" routerLink="/favorite" >
         <button mat-icon-button class="header_btn_favorite">
           <mat-icon class="btn_img">favorite</mat-icon>
           <span>Favorite </span>
         </button>
       </a>
+      <button class="btn btn-danger" *ngIf="auth.isAuthenticated(); else signInButton" (click)="logout()">Log out</button>
+      <ng-template #signInButton>
+        <a routerLink="/login" >
+          <button mat-icon-button class="header_btn_favorite">
+            <mat-icon class="btn_img">account_circle</mat-icon>
+            <span>Sign In </span>
+          </button>
+        </a>
+      </ng-template>
     </div>
+
   </mat-toolbar>
 </div>

@@ -13,6 +13,7 @@ import {HomeRoutingModule} from '../pages/home/home-routing.module';
 import { FavoriteButtonComponent } from './favorite_button/favorite-button.component';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
+import {AuthGuard} from './services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {AuthService} from './services/auth.service';
   exports: [FilmComponent, HeaderComponent, FavoriteButtonComponent, HttpClientModule],
   providers: [
     HomeService,
-    AuthService
+    AuthService,
+    AuthGuard
   ]
 })
 export class SharedModule { }
