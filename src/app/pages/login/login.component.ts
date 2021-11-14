@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {movidbAuthResponse, User} from '../../shared/models/interfaces';
 import {AuthService} from '../../shared/services/auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -11,12 +11,15 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   public form!: FormGroup;
-  public submitted = false;
+  public submitted: boolean = false;
   public message: string = '';
 
-  constructor( public auth: AuthService,
-               private router: Router,
-               private route: ActivatedRoute ) { }
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) { }
 
   public ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
@@ -24,10 +27,10 @@ export class LoginComponent implements OnInit {
         this.message = 'Будь ласака, внесіть дані';
       }
     });
-    this.form = new FormGroup(
+    this.form = this.formBuilder.group(
       {
-        username: new FormControl(null, [Validators.required]),
-        password: new FormControl( null, [Validators.required, Validators.minLength(6)])
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(6)]]
       }
     );
   }
@@ -36,15 +39,12 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
     this.submitted = true;
-
     const user: User = {
       username: this.form.value.username,
       password: this.form.value.password
     };
-
-    this.auth.getTokenFb(user).subscribe(
+    this.auth.getPreviousToken().subscribe(
       (response: movidbAuthResponse) => {
         user.request_token = response.request_token;
         this.auth.setToken(response);
@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
           this.auth.isAuthenticated();
         }, () => {
           this.submitted = false;
-
         });
       }
     );

@@ -20,12 +20,12 @@
           <p>{{item.ratings}}</p>
         </ng-template>
         <div class="action-btns">
-          <app-favorite-button [id]="item.id"></app-favorite-button>
-          <button *ngIf="page; else onFirstPage" [routerLink]="['/about', page, item.id]" mat-icon-button (click)="openDetails($event)">
+          <app-favorite-button [id]="item.id" ></app-favorite-button>
+          <button *ngIf="page; else onFirstPage" [routerLink]="['/about', page, item.id]" mat-icon-button>
             <mat-icon class="btn_img">subject</mat-icon>
           </button>
           <ng-template #onFirstPage>
-            <button [routerLink]="['/about', 1, item.id]" mat-icon-button (click)="openDetails($event)">
+            <button [routerLink]="['/about', 1, item.id]" mat-icon-button>
               <mat-icon class="btn_img">subject</mat-icon>
             </button>
           </ng-template>

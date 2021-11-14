@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Favorites } from 'src/app/shared/models/interfaces';
-
+import {MovieResults} from 'src/app/shared/models/interfaces';
 import {FavoriteService} from '../../shared/film/favorite.service';
+import {HomeService} from '../home/home.service';
 
 @Component({
   selector: 'app-favorite',
@@ -9,11 +9,21 @@ import {FavoriteService} from '../../shared/film/favorite.service';
   styleUrls: ['./favorite.component.scss']
 })
 export class FavoriteComponent implements OnInit {
-  public favorites: Favorites[] = [];
+  public favorites: MovieResults[] = [];
 
-  constructor( private fav: FavoriteService) { }
+  constructor(
+    private favoriteService: FavoriteService,
+    private home: HomeService
+  ) {}
 
   public ngOnInit(): void {
-    this.favorites = this.fav.getAll();
+    const favor = this.favoriteService.get('Favorites: ');
+    favor.forEach((items: string) => {
+      this.home.getById(items).subscribe(
+        (movie: MovieResults) => {
+          this.favorites.push(movie);
+        }
+      );
+    });
   }
 }

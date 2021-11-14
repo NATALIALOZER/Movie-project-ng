@@ -1,44 +1,35 @@
 <div class="main-block">
   <app-header></app-header>
   <h1 class="text-center mt-5 text-white">Please Sign in</h1>
-
   <div class="alert alert-danger" *ngIf="auth.error$ | async as error">{{error}}</div>
   <div class="alert alert-info" *ngIf="message">{{message}}</div>
-
-
   <form class="card"
         [formGroup]="form"
         (ngSubmit)="submit()">
     <div class="form-control"
-         [ngClass]="{invalid: form.get('username')?.touched && form.get('username')?.invalid}"
-    >
+         [ngClass]="{invalid: form.get('username')?.touched && form.get('username')?.invalid}">
       <label for="username">Username:</label>
       <input id="username" type="text" formControlName="username">
       <div
         *ngIf="form.get('username')?.touched && form.get('username')?.invalid"
-        class="validation"
-      >
+        class="validation">
         <small *ngIf="form.get('username')?.errors?.required">Text your username</small>
       </div>
     </div>
-
     <div class="form-control"
          [ngClass]="{invalid: form.get('password')?.touched && form.get('password')?.invalid}">
       <label for="password">Password:</label>
       <input id="password" type="password" formControlName="password">
       <div
         *ngIf="form.get('password')?.touched && form.get('password')?.invalid"
-        class="validation"
-      >
+        class="validation">
         <small *ngIf="form.get('password')?.errors?.required">Text your password</small>
         <small *ngIf="form.get('password')?.errors?.minlength">Password should contain {{form.get('password')?.errors?.minlength.requiredLength}} and more symbols</small>
       </div>
     </div>
-
     <button
       type="submit"
       class="btn btn-secondary p-3"
-      [disabled]="form.invalid || submitted"
-    >Submit</button>
+      [disabled]="form.invalid || submitted">Submit</button>
   </form>
 </div>

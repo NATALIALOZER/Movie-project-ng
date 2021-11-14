@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FavoriteService} from './favorite.service';
 import {Location} from '@angular/common';
-import {HomeService} from '../../pages/home/home.service';
 import {MovieResults} from '../models/interfaces';
 
 @Component({
@@ -14,16 +13,14 @@ export class FilmComponent {
   @Input() public page: any;
   @Input() public toggle: boolean = false;
 
-  constructor( private fav: FavoriteService,
-               private location: Location ) {
+  constructor(
+    private fav: FavoriteService,
+    private location: Location
+  ) {
     this.location = location;
   }
 
   public checkLocation(): boolean {
     return this.location.path() === '/favorite';
-  }
-
-  public openDetails(event: Event): void {
-
   }
 }

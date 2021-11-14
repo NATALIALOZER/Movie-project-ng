@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {Location} from '@angular/common';
-import {AuthService} from "../services/auth.service";
-import {Router} from "@angular/router";
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +9,9 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent {
   public locationPath: string;
-  constructor(private location: Location,
-              public auth: AuthService,
-              private router: Router
+  constructor(
+    private location: Location,
+    public auth: AuthService
   ) { this.locationPath = location.path(); }
 
   public logout(): void {

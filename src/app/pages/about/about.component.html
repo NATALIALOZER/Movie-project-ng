@@ -1,13 +1,18 @@
 <div>
   <app-header></app-header>
-  <div class="about-frame" *ngFor="let item of currentMovie" [style.backgroundImage]="'url(http://image.tmdb.org/t/p/w342'+item.backdrop_path+')'"><div class="back">
-    <mat-card class="card" [id]="item.id">
-      <img mat-card-image class='card-img' src='http://image.tmdb.org/t/p/w342{{item.poster_path}}' alt= "poster_image">
+  <div class="about-frame" [style.backgroundImage]="'url(' + backImgUrl + ')'">
+    <div class="back">
+    <mat-card class="card" [id]="currentMovie.id">
+      <img mat-card-image class='card-img' [src]="posterImg" alt= "poster_image">
         <div class="card-box">
-          <app-favorite-button [id]="item.id"></app-favorite-button>
-          <mat-card-title class="card-title" *ngIf="item.title; else noTitle">{{item.title}}</mat-card-title>
+          <app-favorite-button [id]="currentMovie.id"></app-favorite-button>
+          <mat-card-title class="card-title" *ngIf="currentMovie.title; else noTitle">{{currentMovie.title}}</mat-card-title>
           <ng-template #noTitle>There is no title for this movie =(</ng-template>
-          <mat-card-content class="card-content" *ngIf="item.overview; else noDesc"><p class="ratings">Score: {{item.vote_average}} | Rating: R | Release date: {{item.release_date}}</p><hr><p class="desc">{{item.overview}}</p><hr>
+          <mat-card-content class="card-content" *ngIf="currentMovie.overview; else noDesc">
+            <p class="ratings">Score: {{currentMovie.vote_average}} | Rating: R | Release date: {{currentMovie.release_date}}</p>
+            <hr>
+            <p class="desc">{{currentMovie.overview}}</p>
+            <hr>
           </mat-card-content>
           <ng-template #noDesc>There is no description for this movie =(</ng-template>
       </div>

@@ -4,7 +4,6 @@
   box-sizing: border-box;
   margin: 0;
 }
-
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
@@ -12,7 +11,6 @@ body {
   background-color: #F2F3F5;
   color: #333;
 }
-
 a {
   padding: 0;
   display: flex;
@@ -21,46 +19,37 @@ a {
   color: var(--primary-color);
   cursor: pointer;
   text-decoration: none;
-
   &:hover {
     color: lightsteelblue;
   }
 }
-
 ul {
   list-style: none;
 }
-
 img {
   margin-right: 15px;
 }
-
 .container {
   max-width: 1440px;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
 }
-
 .text-primary {
   color: #474D59;
 }
 .text-dark {
   color: black;
 }
-
 .text-success {
   color: palegreen;
 }
-
 .text-danger {
   color: red;
 }
-
 .text-center {
   text-align: center;
 }
-
 .header-toolbar{
   background-color: #474D59;
   color: white;
@@ -68,13 +57,11 @@ img {
 .header-spacer {
   flex: 0.95 1 auto;
 }
-
 .toggle-bar{
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
 }
-
 .main{
   .main-body{
 

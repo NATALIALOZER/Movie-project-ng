@@ -9,11 +9,12 @@ import {catchError} from 'rxjs/operators';
 export class AuthService {
   public error$: Subject<string> = new Subject<string>();
 
-  constructor(private http: HttpClient) {
-  }
-  get token() {
-    // @ts-ignore
-    const expDate: Date = new Date(localStorage.getItem('token-exp'));
+  constructor(
+    private http: HttpClient
+  ) {}
+
+  public get token(): string | null {
+    const expDate: Date = new Date(localStorage.getItem('token-exp') as string);
     if (new Date() > expDate) {
       this.logout();
       return null;
@@ -31,7 +32,7 @@ export class AuthService {
       );
   }
 
-  public logout(): any {
+  public logout(): void {
     return this.setToken(null);
   }
 
@@ -39,9 +40,8 @@ export class AuthService {
     return !!this.token;
   }
 
-  public getTokenFb(user: User): any {
+  public getPreviousToken(): Observable<movidbAuthResponse> {
     return this.http.get<movidbAuthResponse>('https://api.themoviedb.org/3/authentication/token/new?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&');
-
   }
 
   public setToken(res: movidbAuthResponse | null): void {
@@ -58,7 +58,7 @@ export class AuthService {
     }
   }
 
-  private handleError(error: HttpErrorResponse ) {
+  private handleError(error: HttpErrorResponse ): Observable<never> {
     const message = error.error.status_message;
     switch (message) {
       case 'Invalid username and/or password: You did not provide a valid login.':
@@ -66,6 +66,8 @@ export class AuthService {
         break;
       case 'Email not verified: Your email address has not been verified.':
         this.error$.next('Email not verified');
+        break;
+      default:
         break;
     }
     return throwError(error);

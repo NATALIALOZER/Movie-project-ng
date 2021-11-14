@@ -10,7 +10,7 @@ export interface MovieResults {
   ratings: any;
   applyClass: string;
   adult: boolean;
-  backdrop_path?: string;
+  backdrop_path: string;
   genre_ids?: any[];
   id: number;
   original_language?: string;
@@ -23,18 +23,9 @@ export interface MovieResults {
   video?: boolean;
   vote_average?: number;
   vote_count?: number;
+  favorite?: boolean;
 }
 
-export interface Favorites {
-  id: any;
-  title: string;
-  overview: string;
-  ratings: string;
-  poster_path: string;
-  applyClass: string;
-  release_date: Date;
-  adult: boolean;
-}
 
 export interface User {
   username: string;
@@ -47,8 +38,3 @@ export interface movidbAuthResponse {
   expires_at: string;
   request_token: string;
 }
-
-
-/*{
-
-}*/

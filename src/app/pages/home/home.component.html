@@ -7,7 +7,7 @@
           <button appHoverClass="btn-primary" class="btn" (click)="toggle=!toggle">Change view</button>
         </span>
         <div class="changer main-body">
-            <app-film [movies]="movies" [page]="page" [toggle]="toggle"></app-film>
+            <app-film [movies]="movies" [page]="page" [toggle]="toggle" ></app-film>
         </div>
         <ngb-pagination
           [(page)]="page"

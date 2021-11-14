@@ -1,39 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
-import {Movie, MovieResults} from '../../shared/models/interfaces';
+import {Movie,  MovieResults} from '../../shared/models/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
-  private urlApi = environment.urlApi;
+  private searchApi = 'now_playing';
+  private language = 'en-US';
 
   constructor(private http: HttpClient) { }
 
-  public getData(): Observable<MovieResults[]> {
-    return this.http.get<Movie>(this.urlApi + `&page=1`).pipe(
-      map(x => x.results)
-    );
+  public getMovies(page: number): Observable<Movie> {
+    return this.http.get<Movie>(`${environment._url}/${this.searchApi}?api_key=${environment.apiKey}&language=${this.language}&page=${page.toString()}`);
   }
 
-  public getResponse(): Observable<Movie> {
-    return this.http.get<Movie>(this.urlApi).pipe(tap(response =>
-        response.total_results
-    ));
-  }
-
-  public getById(page: number): Observable<MovieResults[]> {
-    return this.http.get<Movie>(`${this.urlApi}&page=${page}`).pipe(
-      map(x => x.results)
-    );
-  }
-
-  public getDataEvent(event: number): Observable<MovieResults[]> {
-    return this.http.get<Movie>(this.urlApi + `&page=${event}`).pipe(
-        map(x => x.results)
-      );
+  public getById(id: string): Observable<MovieResults> {
+    return this.http.get<MovieResults>(`${environment._url}/${id}?api_key=${environment.apiKey}&language=e${this.language}`);
   }
 }

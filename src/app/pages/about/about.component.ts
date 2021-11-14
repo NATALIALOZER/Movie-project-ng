@@ -1,26 +1,51 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {HomeService} from '../home/home.service';
 import {MovieResults} from '../../shared/models/interfaces';
+import {environment} from '../../../environments/environment';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss']
 })
-export class AboutComponent implements OnInit {
-  public currentMovie: MovieResults[] = [];
+export class AboutComponent implements OnInit, OnDestroy {
+  public currentMovie!: MovieResults;
+  public backImgUrl: string = '';
+  public posterImg: string = '';
+  private paSub: Subscription = new Subscription();
+  private dSub: Subscription = new Subscription();
 
-  constructor(private route: ActivatedRoute, private home: HomeService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private homeService: HomeService
+  ) {}
 
   public ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      const currentId: string = params.id;
-      const currentPage = params.page;
-      this.home.getById(currentPage).subscribe((response: any[]) => {
-        /*console.log(response.filter(el=>el.id == current_id));*/
-        this.currentMovie = response.filter(el => el.id === +currentId);
-      });
+    this.getParams();
+  }
+
+  public ngOnDestroy(): void {
+      this.dSub.unsubscribe();
+      this.paSub.unsubscribe();
+  }
+
+  private getParams(): Subscription {
+    return this.paSub = this.route.params.subscribe((params: Params) => {
+      const currentId = params.id;
+      setTimeout(() => {
+        this.getDetails(currentId);
+      }, 200);
+    });
+  }
+
+  private getDetails(currentId: string): Subscription {
+    return this.dSub = this.homeService.getById(currentId)
+      .subscribe((response: MovieResults) => {
+        this.backImgUrl = environment.img_url.background + response.backdrop_path;
+        this.posterImg = environment.img_url.poster + response.backdrop_path;
+        this.currentMovie = response;
     });
   }
 }

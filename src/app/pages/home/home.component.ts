@@ -13,36 +13,31 @@ export class HomeComponent implements OnInit, OnDestroy {
   public movies: MovieResults[] = [];
   public length: number = 0;
   public page: number = 1;
-  public subscription: Subscription = new Subscription();
   public toggle: boolean = false;
+  private sub: Subscription = new Subscription();
+
   constructor(
     private http: HttpClient,
-    private home: HomeService
-  ) {
-  }
+    private homeService: HomeService
+  ) {}
 
-  public getDataEvent(event: number): [Subscription, number] {
-    if (event) {
-      this.page = event;
-      this.subscription = this.home.getDataEvent(event).subscribe((response: MovieResults[]) => {
-        this.movies = response;
-      });
-    }
-    return [this.subscription, this.page];
+  public getDataEvent(event: number): Subscription {
+    this.page = event;
+    return this.sub = this.homeService.getMovies(this.page).subscribe(
+      (response: Movie) => {
+        this.length = +response.total_results;
+        this.movies = response.results;
+      }
+    );
   }
 
   public ngOnInit(): void {
-    this.home.getData().subscribe((response: MovieResults[]) => {
-      this.movies = response;
-    });
-    this.home.getResponse().subscribe((res: Movie) => {
-      this.length = res.total_results;
-    });
+    this.getDataEvent(this.page);
   }
 
   public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
   }
 }
