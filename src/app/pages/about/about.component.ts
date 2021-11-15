@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {HomeService} from '../home/home.service';
+import {HomeService} from '../../shared/services/home.service';
 import {MovieResults} from '../../shared/models/interfaces';
 import {environment} from '../../../environments/environment';
-import {Subscription} from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-about',
@@ -14,8 +15,7 @@ export class AboutComponent implements OnInit, OnDestroy {
   public currentMovie!: MovieResults;
   public backImgUrl: string = '';
   public posterImg: string = '';
-  private paSub: Subscription = new Subscription();
-  private dSub: Subscription = new Subscription();
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -27,21 +27,22 @@ export class AboutComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-      this.dSub.unsubscribe();
-      this.paSub.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private getParams(): Subscription {
-    return this.paSub = this.route.params.subscribe((params: Params) => {
+    return this.route.params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params: Params) => {
       const currentId = params.id;
-      setTimeout(() => {
-        this.getDetails(currentId);
-      }, 200);
+      this.getDetails(currentId);
     });
   }
 
   private getDetails(currentId: string): Subscription {
-    return this.dSub = this.homeService.getById(currentId)
+    return this.homeService.getById(currentId)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((response: MovieResults) => {
         this.backImgUrl = environment.img_url.background + response.backdrop_path;
         this.posterImg = environment.img_url.poster + response.backdrop_path;

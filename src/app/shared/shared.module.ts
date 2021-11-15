@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FilmComponent } from './film/film.component';
 import {MatCardModule} from '@angular/material/card';
 import {HoverClassDirective} from '../directives/hover-class.directive';
-import {HomeService} from '../pages/home/home.service';
+import {HomeService} from './services/home.service';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { HeaderComponent } from './header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -30,13 +30,14 @@ import {AuthGuard} from './services/auth.guard';
     MatIconModule,
     MatButtonModule,
     HomeRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   exports: [FilmComponent, HeaderComponent, FavoriteButtonComponent, HttpClientModule],
   providers: [
     HomeService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+
   ]
 })
 export class SharedModule { }

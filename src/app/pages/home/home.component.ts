@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HomeService } from './home.service';
+import { HomeService } from '../../shared/services/home.service';
 import {Movie, MovieResults} from '../../shared/models/interfaces';
 import {Subscription} from 'rxjs';
 

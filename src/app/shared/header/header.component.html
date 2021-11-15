@@ -12,7 +12,7 @@
       </a>
       <button class="btn btn-danger" *ngIf="auth.isAuthenticated(); else signInButton" (click)="logout()">Log out</button>
       <ng-template #signInButton>
-        <a routerLink="/login" >
+        <a routerLink="/login" class="ms-5">
           <button mat-icon-button class="header_btn_favorite">
             <mat-icon class="btn_img">account_circle</mat-icon>
             <span>Sign In </span>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MovieResults} from 'src/app/shared/models/interfaces';
-import {FavoriteService} from '../../shared/film/favorite.service';
-import {HomeService} from '../home/home.service';
+import {FavoriteService} from '../../shared/services/favorite.service';
+import {HomeService} from '../../shared/services/home.service';
 
 @Component({
   selector: 'app-favorite',

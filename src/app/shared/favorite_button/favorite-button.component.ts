@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FavoriteService} from '../film/favorite.service';
+import {FavoriteService} from '../services/favorite.service';
 import {Location} from '@angular/common';
 import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
