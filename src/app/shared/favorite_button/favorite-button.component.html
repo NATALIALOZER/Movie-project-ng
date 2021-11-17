@@ -1,5 +1,5 @@
 <mat-card-actions *ngIf="!checkLocation(); else onFavPage" class="favBtn">
-  <button *ngIf="!checkFav(id)" mat-icon-button class="favorite-icon" (click)="addToFavorite($event)">
+  <button *ngIf="!checkFav(id)" mat-icon-button class="favorite-icon" (click)="addToFavorite()">
     <mat-icon >favorite</mat-icon>
   </button>
 </mat-card-actions>

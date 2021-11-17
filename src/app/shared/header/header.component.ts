@@ -8,11 +8,14 @@ import {AuthService} from '../services/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
   public locationPath: string;
   constructor(
     private location: Location,
     public auth: AuthService
-  ) { this.locationPath = location.path(); }
+  ) {
+    this.locationPath = location.path();
+  }
 
   public logout(): void {
     this.auth.logout();

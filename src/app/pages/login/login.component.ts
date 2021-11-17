@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {movidbAuthResponse, User} from '../../shared/models/interfaces';
 import {AuthService} from '../../shared/services/auth.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   public submitted: boolean = false;
   public message: string = '';
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     public auth: AuthService,
@@ -48,7 +51,9 @@ export class LoginComponent implements OnInit {
       (response: movidbAuthResponse) => {
         user.request_token = response.request_token;
         this.auth.setToken(response);
-        this.auth.login(user).subscribe( () => {
+        this.auth.login(user)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe( () => {
           this.form.reset();
           this.router.navigate(['home']);
           this.submitted = false;
@@ -58,5 +63,10 @@ export class LoginComponent implements OnInit {
         });
       }
     );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

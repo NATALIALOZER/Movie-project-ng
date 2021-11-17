@@ -13,14 +13,14 @@ import {HomeRoutingModule} from '../pages/home/home-routing.module';
 import { FavoriteButtonComponent } from './favorite_button/favorite-button.component';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthService} from './services/auth.service';
-import {AuthGuard} from './services/auth.guard';
+import {AuthGuard} from './guards/auth.guard';
 
 @NgModule({
   declarations: [
     FilmComponent,
     HoverClassDirective,
     HeaderComponent,
-    FavoriteButtonComponent,
+    FavoriteButtonComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +32,7 @@ import {AuthGuard} from './services/auth.guard';
     HomeRoutingModule,
     HttpClientModule,
   ],
-  exports: [FilmComponent, HeaderComponent, FavoriteButtonComponent, HttpClientModule],
+    exports: [FilmComponent, HeaderComponent, FavoriteButtonComponent, HttpClientModule],
   providers: [
     HomeService,
     AuthService,

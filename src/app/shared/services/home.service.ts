@@ -8,16 +8,15 @@ import {Movie,  MovieResults} from '../models/interfaces';
   providedIn: 'root'
 })
 export class HomeService {
-  private searchApi = 'now_playing';
-  private language = 'en-US';
-
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   public getMovies(page: number): Observable<Movie> {
-    return this.http.get<Movie>(`${environment._url}/${this.searchApi}?api_key=${environment.apiKey}&language=${this.language}&page=${page.toString()}`);
+    return this.http.get<Movie>(`${environment._url}/${environment.searchApi}?api_key=${environment.apiKey}&language=${environment.language}&page=${page.toString()}`);
   }
 
   public getById(id: string): Observable<MovieResults> {
-    return this.http.get<MovieResults>(`${environment._url}/${id}?api_key=${environment.apiKey}&language=e${this.language}`);
+    return this.http.get<MovieResults>(`${environment._url}/${id}?api_key=${environment.apiKey}&language=e${environment.language}`);
   }
 }

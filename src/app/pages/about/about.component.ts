@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HomeService} from '../../shared/services/home.service';
-import {MovieResults} from '../../shared/models/interfaces';
+import {Movie, MovieResults} from '../../shared/models/interfaces';
 import {environment} from '../../../environments/environment';
 import {Subject, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
@@ -18,12 +18,13 @@ export class AboutComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private homeService: HomeService
   ) {}
 
   public ngOnInit(): void {
-    this.getParams();
+    this.getDetails(this.route.snapshot.paramMap.get('id') as string);
   }
 
   public ngOnDestroy(): void {
@@ -31,22 +32,41 @@ export class AboutComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getParams(): Subscription {
-    return this.route.params
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params: Params) => {
-      const currentId = params.id;
-      this.getDetails(currentId);
-    });
+  public back(): void {
+    this.router.navigate(['/home']);
   }
 
-  private getDetails(currentId: string): Subscription {
-    return this.homeService.getById(currentId)
+  public next(): void {
+    const page: string = this.route.snapshot.paramMap.get('page') as string;
+    const currentId: string = this.route.snapshot.paramMap.get('id') as string;
+    this.homeService.getMovies(+page)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+      (response: Movie) => {
+        let position: number = 0;
+        const movies = response.results;
+        const index = movies.find((item: MovieResults) => item.id === +currentId);
+        if (index) {
+          position = movies.indexOf(index) + 1;
+          if (!movies[position]) {
+            position = 0;
+          }
+          const item: MovieResults = movies[position];
+          this.router.navigate(['/about', page, item.id]);
+          this.getDetails(item.id.toString());
+        }
+      }
+    );
+  }
+
+
+  private getDetails(id: string): Subscription {
+    return this.homeService.getById(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: MovieResults) => {
-        this.backImgUrl = environment.img_url.background + response.backdrop_path;
-        this.posterImg = environment.img_url.poster + response.backdrop_path;
         this.currentMovie = response;
+        this.backImgUrl = environment.img_url.background + response.backdrop_path;
+        this.posterImg = environment.img_url.poster + response.poster_path;
     });
   }
 }

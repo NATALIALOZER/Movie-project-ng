@@ -13,17 +13,19 @@ export class FavoriteComponent implements OnInit {
 
   constructor(
     private favoriteService: FavoriteService,
-    private home: HomeService
+    private homeService: HomeService
   ) {}
 
   public ngOnInit(): void {
     const favor = this.favoriteService.get('Favorites: ');
-    favor.forEach((items: string) => {
-      this.home.getById(items).subscribe(
-        (movie: MovieResults) => {
-          this.favorites.push(movie);
-        }
-      );
-    });
+    if (favor) {
+      favor.forEach((items: string) => {
+        this.homeService.getById(items).subscribe(
+          (movie: MovieResults) => {
+            this.favorites.push(movie);
+          }
+        );
+      });
+    }
   }
 }

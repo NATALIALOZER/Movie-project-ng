@@ -1,13 +1,14 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {movidbAuthResponse, User} from '../models/interfaces';
 import {Observable, of, Subject, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, takeUntil} from 'rxjs/operators';
 
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnDestroy {
   public error$: Subject<string> = new Subject<string>();
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private http: HttpClient
@@ -47,6 +48,7 @@ export class AuthService {
   public setToken(res: movidbAuthResponse | null): void {
     if (res) {
       this.http.get<movidbAuthResponse>('https://api.themoviedb.org/3/authentication/token/new?api_key=ebea8cfca72fdff8d2624ad7bbf78e4c&')
+        .pipe(takeUntil(this.destroy$))
         .subscribe(
           (response: movidbAuthResponse) => {
             localStorage.setItem('token', response.request_token);
@@ -56,6 +58,11 @@ export class AuthService {
     } else {
       localStorage.clear();
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private handleError(error: HttpErrorResponse ): Observable<never> {

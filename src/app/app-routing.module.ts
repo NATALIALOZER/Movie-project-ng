@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from './shared/services/auth.guard';
+import {AuthGuard} from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,12 +15,12 @@ const routes: Routes = [
   {
     path: 'login', loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
-  {
+  /*{
     path: '**', redirectTo: 'home'
   },
   {
     path: '', redirectTo: 'home', pathMatch: 'full'
-  }
+  }*/
 ];
 
 @NgModule({

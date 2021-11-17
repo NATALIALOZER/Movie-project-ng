@@ -11,8 +11,7 @@ import {Router} from '@angular/router';
 })
 export class FavoriteButtonComponent implements OnInit {
   @Input() public id: number = 0;
-  @Input() public event!: Event;
-  public favorites: any[] = [];
+  private favorites: string[] = [];
 
   constructor(
     private favoriteService: FavoriteService,
@@ -21,24 +20,20 @@ export class FavoriteButtonComponent implements OnInit {
     private router: Router
   ) {
     this.location = location;
+    this.favorites = this.favoriteService.get('Favorites: ');
   }
 
   public ngOnInit(): void {
   }
 
-  public addToFavorite (event: any): void {
+  public addToFavorite (): void {
     if (this.auth.isAuthenticated()) {
-      const target = event.target;
-      const card = target.closest('.card');
-      const id = card.id.toString();
-      let storage = this.favoriteService.get('Favorites: ');
-      if (!storage) {
-        storage = [];
+      if (!this.favorites) {
+        this.favorites = [];
       }
-      if (!storage.includes(id)) {
-        const be = [...storage, id];
-        this.favorites = be;
-        this.favoriteService.set('Favorites: ', be);
+      if (!this.favorites.includes(this.id.toString())) {
+        this.favorites = [...this.favorites, this.id.toString()];
+        this.favoriteService.set('Favorites: ', this.favorites);
       }
     } else {
       this.router.navigate(['/login'], {
@@ -50,14 +45,16 @@ export class FavoriteButtonComponent implements OnInit {
   }
 
   public checkFav(id: number): boolean {
-    return this.favorites.includes(id.toString());
+    if (this.favorites) {
+      return this.favorites.includes(id.toString());
+    } else {
+      return false;
+    }
   }
 
   public removeFromFavorite (id: number): void {
     const str: string = id.toString();
-    const storage = this.favoriteService.get('Favorites: ');
-    this.favorites = storage;
-    this.favoriteService.set('Favorites: ' , storage.filter( (item: string) => item !== str));
+    this.favoriteService.set('Favorites: ' , this.favorites.filter( (item: string) => item !== str));
   }
 
   public checkLocation(): boolean {

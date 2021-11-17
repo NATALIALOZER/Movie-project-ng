@@ -10,17 +10,22 @@ import {MovieResults} from '../models/interfaces';
 })
 export class FilmComponent {
   @Input() public movies: MovieResults[] = [];
-  @Input() public page: any;
+  @Input() public page: number = 0;
   @Input() public toggle: boolean = false;
+
+  public locationPath: string;
 
   constructor(
     private fav: FavoriteService,
     private location: Location
   ) {
     this.location = location;
+    this.locationPath = location.path();
   }
 
   public checkLocation(): boolean {
     return this.location.path() === '/favorite';
   }
+
+
 }
