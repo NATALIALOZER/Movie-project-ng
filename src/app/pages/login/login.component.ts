@@ -25,7 +25,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.route.queryParams.subscribe((params: Params) => {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params: Params) => {
       if (params['loginAgain']) {
         this.message = 'Будь ласака, внесіть дані';
       }
@@ -43,11 +45,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.submitted = true;
-    const user: User = {
-      username: this.form.value.username,
-      password: this.form.value.password
-    };
-    this.auth.getPreviousToken().subscribe(
+    const username = this.form.value.username;
+    const password = this.form.value.password;
+    const user: User = {username, password};
+    this.auth.getPreviousToken()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
       (response: movidbAuthResponse) => {
         user.request_token = response.request_token;
         this.auth.setToken(response);

@@ -13,7 +13,7 @@
           [(page)]="page"
           [pageSize]="20"
           [collectionSize]="length"
-          (pageChange)="getDataEvent($event)"
+          (pageChange)="getDataEvent()"
           [maxSize]="3" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
           ><ng-template ngbPaginationFirst>First</ng-template>
           <ng-template ngbPaginationLast>Last</ng-template>

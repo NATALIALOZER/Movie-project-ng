@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {FavoriteService} from '../services/favorite.service';
+import {FavoriteService} from '../../services/favorite.service';
 import {Location} from '@angular/common';
-import {MovieResults} from '../models/interfaces';
+import {MovieResults} from '../../models/interfaces';
 
 @Component({
   selector: 'app-film',

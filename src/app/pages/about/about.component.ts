@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HomeService} from '../../shared/services/home.service';
 import {Movie, MovieResults} from '../../shared/models/interfaces';
 import {environment} from '../../../environments/environment';
-import {Subject, Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
 @Component({
@@ -33,7 +33,8 @@ export class AboutComponent implements OnInit, OnDestroy {
   }
 
   public back(): void {
-    this.router.navigate(['/home']);
+    const page = this.route.snapshot.paramMap.get('page');
+    this.router.navigate(['/home'], { queryParams: { page }});
   }
 
   public next(): void {
@@ -60,8 +61,8 @@ export class AboutComponent implements OnInit, OnDestroy {
   }
 
 
-  private getDetails(id: string): Subscription {
-    return this.homeService.getById(id)
+  private getDetails(id: string): void {
+    this.homeService.getById(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: MovieResults) => {
         this.currentMovie = response;

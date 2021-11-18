@@ -1,3 +1,4 @@
+
 <div>
   <app-header></app-header>
   <div class="about-frame" [style.backgroundImage]="'url(' + backImgUrl + ')'">
@@ -20,24 +21,29 @@
         </a>
       </div>
     </div>
-    <mat-card class="card" [id]="currentMovie.id">
-      <img mat-card-image class='card-img' [src]="posterImg" alt="poster_image">
-      <div class="card-box col-6">
-        <app-favorite-button [id]="currentMovie.id"></app-favorite-button>
-        <mat-card-title class="card-title" *ngIf="currentMovie.title; else noTitle">{{currentMovie.title}}</mat-card-title>
-        <ng-template #noTitle>There is no title for this movie =(</ng-template>
-        <mat-card-content class="card-content">
-          <p class="ratings">Score: {{currentMovie.vote_average}} | Rating: R | Release date: {{currentMovie.release_date}}</p>
-        </mat-card-content>
-      </div>
-      <div class="card-box">
-        <mat-card-content class="card-content" *ngIf="currentMovie.overview; else noDesc">
-          <hr>
-          <p class="desc">{{currentMovie.overview}}</p>
-          <hr>
-        </mat-card-content>
-        <ng-template #noDesc>There is no description for this movie =(</ng-template>
-      </div>
-    </mat-card>
+    <div *ngIf="currentMovie; else loading">
+      <mat-card class="card" [id]="currentMovie.id">
+        <img mat-card-image class='card-img' [src]="posterImg" alt="poster_image">
+        <div class="card-box col-6">
+          <app-favorite-button [id]="currentMovie.id"></app-favorite-button>
+          <mat-card-title class="card-title" *ngIf="currentMovie.title; else noTitle">{{currentMovie.title}}</mat-card-title>
+          <ng-template #noTitle>There is no title for this movie =(</ng-template>
+          <mat-card-content class="card-content">
+            <p class="ratings">Score: {{currentMovie.vote_average}} | Rating: R | Release date: {{currentMovie.release_date}}</p>
+          </mat-card-content>
+        </div>
+        <div class="card-box">
+          <mat-card-content class="card-content" *ngIf="currentMovie.overview; else noDesc">
+            <hr>
+            <p class="desc">{{currentMovie.overview}}</p>
+            <hr>
+          </mat-card-content>
+          <ng-template #noDesc>There is no description for this movie =(</ng-template>
+        </div>
+      </mat-card>
+    </div>
+    <ng-template #loading>
+      <p class="text-center">Loading...</p>
+    </ng-template>
   </div>
 </div>
