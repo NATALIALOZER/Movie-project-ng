@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class FavoriteService {
-  constructor() {}
+  public removeFavorites$: Subject<void> = new Subject();
 
   public set(key: string, data: any): void {
     try {

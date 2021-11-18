@@ -32,12 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.message = 'Будь ласака, внесіть дані';
       }
     });
-    this.form = this.formBuilder.group(
-      {
-        username: ['', [Validators.required]],
-        password: ['', [Validators.required, Validators.minLength(6)]]
-      }
-    );
+    this.formInit();
   }
 
   public submit(): void {
@@ -45,9 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.submitted = true;
-    const username = this.form.value.username;
-    const password = this.form.value.password;
-    const user: User = {username, password};
+    const user: User = this.form.value;
     this.auth.getPreviousToken()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -71,5 +64,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private formInit(): void {
+    this.form = this.formBuilder.group(
+      {
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(6)]]
+      }
+    );
   }
 }

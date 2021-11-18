@@ -13,6 +13,7 @@ export class FavoriteButtonComponent implements OnInit {
   @Input() public id: number = 0;
   private favorites: string[] = [];
 
+
   constructor(
     private favoriteService: FavoriteService,
     private location: Location,
@@ -20,7 +21,6 @@ export class FavoriteButtonComponent implements OnInit {
     private router: Router
   ) {
     this.location = location;
-    this.favorites = this.favoriteService.get('Favorites: ');
   }
 
   public ngOnInit(): void {
@@ -28,6 +28,7 @@ export class FavoriteButtonComponent implements OnInit {
 
   public addToFavorite (): void {
     if (this.auth.isAuthenticated()) {
+      this.favorites = this.favoriteService.get('Favorites: ');
       if (!this.favorites) {
         this.favorites = [];
       }
@@ -52,12 +53,14 @@ export class FavoriteButtonComponent implements OnInit {
     }
   }
 
-  public removeFromFavorite (id: number): void {
-    const str: string = id.toString();
-    this.favoriteService.set('Favorites: ' , this.favorites.filter( (item: string) => item !== str));
-  }
-
   public checkLocation(): boolean {
     return this.location.path() === '/favorite';
+  }
+
+  public removeFromFavorite (id: number): void {
+    this.favorites = this.favoriteService.get('Favorites: ');
+    const str: string = id.toString();
+    this.favoriteService.set('Favorites: ' , this.favorites.filter( (item: string) => item !== str));
+    this.favoriteService.removeFavorites$.next();
   }
 }

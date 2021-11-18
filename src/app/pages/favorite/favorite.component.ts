@@ -19,8 +19,22 @@ export class FavoriteComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
+    this.getFavorites();
+    this.favoriteService.removeFavorites$.subscribe(
+      () => {
+        this.getFavorites();
+      }
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  private getFavorites(): void {
     const favor = this.favoriteService.get('Favorites: ');
     if (favor) {
+      this.favorites = [];
       favor.forEach((items: string) => {
         this.sub = this.homeService.getById(items).subscribe(
           (movie: MovieResults) => {
@@ -29,9 +43,5 @@ export class FavoriteComponent implements OnInit, OnDestroy {
         );
       });
     }
-  }
-
-  public ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 }
