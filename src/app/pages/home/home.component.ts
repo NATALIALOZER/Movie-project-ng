@@ -4,7 +4,7 @@ import { HomeService } from '../../shared/services/home.service';
 import {Movie, MovieResults} from '../../shared/models/interfaces';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -26,22 +26,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
 
-  public getParams(): any {
-    this.route.queryParams
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params: Params) => {
-        if (params['page'] && +params['page'] !== this.page && +params['page'] !== this.params) {
-          this.params = +params['page'];
-          console.log(this.params)
-          return this.params;
-        } else {
-          console.log(this.page)
-          return this.page;
-        }
-      });
-  }
-
-
   public getDataEvent(): void {
     let pager = 0;
     this.route.queryParams
@@ -49,10 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((params: Params) => {
         if (params['page'] && +params['page'] !== this.page && +params['page'] !== this.params) {
           this.params = +params['page'];
-          console.log(this.params);
           pager = this.params;
         } else {
-          console.log(this.page);
           pager = this.page;
         }
         this.homeService.getMovies(pager)
