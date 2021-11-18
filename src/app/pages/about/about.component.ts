@@ -60,7 +60,6 @@ export class AboutComponent implements OnInit, OnDestroy {
     );
   }
 
-
   private getDetails(id: string): void {
     this.homeService.getById(id)
       .pipe(takeUntil(this.destroy$))

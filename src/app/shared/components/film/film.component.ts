@@ -26,6 +26,4 @@ export class FilmComponent {
   public checkLocation(): boolean {
     return this.location.path() === '/favorite';
   }
-
-
 }
